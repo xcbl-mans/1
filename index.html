@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽卡程序</title>
+</head>
+<body>
+    <h1>欢迎来到抽卡页面</h1>
+    <button id="drawCardButton">开始抽卡</button>
+    <p id="result"></p >
+    <p id="drawCount">当前抽卡次数：0</p >
+
+    <script>
+        let drawCount = 0;  // 抽卡次数
+        const cards = ['SSR卡', 'SR卡', 'R卡', 'N卡'];  // 卡池
+
+        // 抽卡函数
+        function drawCard() {
+            drawCount++;  // 每次抽卡，计数器加1
+            let selectedCard = '';
+
+            // 第80抽必中奖
+            if (drawCount === 80) {
+                selectedCard = 'SSR卡';
+            }
+            // 前30抽有1%概率必中奖
+            else if (drawCount <= 30 && Math.random() < 0.01) {
+                selectedCard = 'SSR卡';
+            }
+            // 常规随机抽取
+            else {
+                const randomIndex = Math.floor(Math.random() * cards.length);
+                selectedCard = cards[randomIndex];
+            }
+
+            // 显示抽卡结果和抽卡次数
+            document.getElementById('result').textContent = '你抽中了：' + selectedCard;
+            document.getElementById('drawCount').textContent = '当前抽卡次数：' + drawCount;
+
+            // 抽到第80次后重置计数器
+            if (drawCount === 80) {
+                drawCount = 0;
+            }
+        }
+
+        // 绑定按钮点击事件
+        document.getElementById('drawCardButton').addEventListener('click', drawCard);
+    </script>
+</body>
+</html>
